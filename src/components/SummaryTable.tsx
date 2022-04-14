@@ -1,11 +1,10 @@
-import React, {useState} from 'react';
-import {initialState} from "../redux/store";
-import {CATEGORIES} from "../redux/store";
+import React from 'react';
+import {CATEGORIES} from "../redux/db";
 import { TaskInterfaceSummary } from "../types/task";
+import {useTypedSelector} from "../hooks/useTypedSelector";
 
 export const SummaryTable: React.FC = () => {
-    const [state] = useState(initialState);
-    const tasks = state.tasks
+    const tasks = useTypedSelector(state => state.tasks)
 
     const summary: TaskInterfaceSummary[] = CATEGORIES.map(category => ({
         category,

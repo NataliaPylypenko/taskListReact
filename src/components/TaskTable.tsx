@@ -1,30 +1,32 @@
-import React, {useState} from 'react';
-import {initialState} from "../redux/store";
+import React from 'react';
 import { TaskInterface} from "../types/task";
+import {useTypedSelector} from "../hooks/useTypedSelector";
+import {useActions} from "../hooks/useActions";
 
 export const TaskTable: React.FC = () => {
-
-    const [state, setData] = useState(initialState);
+    const tasks = useTypedSelector(state => state.tasks)
+    const showActiveTaskItems = useTypedSelector(state => state.showActiveTaskItems)
+    const {delTaskAction} = useActions()
 
     const delTaskHandler = (task: TaskInterface) => {
-        setData({...state, tasks: state.tasks.filter(item => item.id !== task.id)})
+        //setData({...state, tasks: state.tasks.filter(item => item.id !== task.id)})
     }
     const archiveTaskHandler = (task: TaskInterface) => {
-        setData({
-            ...state,
-            tasks: state.tasks.map(item => {
-                if(item.id === task.id){
-                    item.status = (item.status === 'active') ? 'archive' : 'active'
-                }
-                return item;
-            })
-        })
+        // setData({
+        //     ...state,
+        //     tasks: state.tasks.map(item => {
+        //         if(item.id === task.id){
+        //             item.status = (item.status === 'active') ? 'archive' : 'active'
+        //         }
+        //         return item;
+        //     })
+        // })
     }
     const toggleStatusHandler = () => {
-        setData({
-            ...state,
-            showActiveTaskItems: (state.showActiveTaskItems === 'active' ? 'archive' : 'active')
-        })
+        // setData({
+        //     ...state,
+        //     showActiveTaskItems: (state.showActiveTaskItems === 'active' ? 'archive' : 'active')
+        // })
     }
 
     return (
@@ -50,8 +52,8 @@ export const TaskTable: React.FC = () => {
 
             <div className="content">
 
-                {state.tasks
-                    .filter(task => task.status === state.showActiveTaskItems)
+                {tasks
+                    .filter(task => task.status === showActiveTaskItems)
                     .map((task, i) => (
                         <div className="table-row note-item" key={i}>
 
@@ -79,7 +81,7 @@ export const TaskTable: React.FC = () => {
                                     <i className="fas fa-folder-plus"/>
                                 </button>
                                 <button type="button" className="btn-trash btn-sm btn-del" onClick={() => {
-                                    delTaskHandler(task)
+                                    delTaskAction(task)
                                 }}>
                                     <i className="fas fa-trash"/>
                                 </button>
