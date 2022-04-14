@@ -1,6 +1,5 @@
 import React, {useState} from 'react'
-import {initialState} from "../redux/store";
-import { TaskInterface } from '../types/task'
+import {initialState, TaskInterface} from "../redux/store";
 
 export const TaskTable: React.FC = () => {
 
@@ -8,6 +7,23 @@ export const TaskTable: React.FC = () => {
 
     const delTaskHandler = (task: TaskInterface) => {
         setData({...state, tasks: state.tasks.filter(item => item.id !== task.id)})
+    }
+    const archiveTaskHandler = (task: TaskInterface) => {
+        setData({
+            ...state,
+            tasks: state.tasks.map(item => {
+                if(item.id === task.id){
+                    item.status = (item.status === 'active') ? 'archive' : 'active'
+                }
+                return item;
+            })
+        })
+    }
+    const toggleStatusHandler = () => {
+        setData({
+            ...state,
+            showActiveTaskItems: (state.showActiveTaskItems === 'active' ? 'archive' : 'active')
+        })
     }
 
     return (
@@ -22,9 +38,10 @@ export const TaskTable: React.FC = () => {
                 <span className="row-item">Category</span>
                 <span className="row-item">Content</span>
                 <span className="row-item">Dates</span>
+                <span className="row-item">status</span>
 
                 <div className="row-item flex-item flex-inherit w-105 d-flex justify-content-end align-items-center">
-                    <button type="button" className="btn-star btn-sm btn-toggle"><i className="fas fa-folder-plus"/>
+                    <button type="button" className="btn-star btn-sm btn-toggle" onClick={ toggleStatusHandler }><i className="fas fa-folder-plus"/>
                     </button>
                     <button type="button" className="btn-trash btn-sm"><i className="fas fa-trash"/></button>
                 </div>
@@ -32,42 +49,44 @@ export const TaskTable: React.FC = () => {
 
             <div className="content">
 
-                {state.tasks.map((task, i) => (
-                    <div className="table-row note-item" key={i}>
+                {state.tasks
+                    .filter(task => task.status === state.showActiveTaskItems)
+                    .map((task, i) => (
+                        <div className="table-row note-item" key={i}>
 
-                        <div className="row-item flex-inherit w-45">
-                            <div className="logo d-flex justify-content-center align-items-center">
-                                <i className="fas fa-tasks"/>
+                            <div className="row-item flex-inherit w-45">
+                                <div className="logo d-flex justify-content-center align-items-center">
+                                    <i className="fas fa-tasks"/>
+                                </div>
                             </div>
-                        </div>
 
-                        <span className="row-item heading-column">{task.name}</span>
-                        <span className="row-item">{task.created}</span>
-                        <span className="row-item">{task.created}</span>
-                        <span className="row-item">{task.content}</span>
-                        <span className="row-item">-</span>
+                            <span className="row-item heading-column">{task.name}</span>
+                            <span className="row-item">{task.created}</span>
+                            <span className="row-item">{task.created}</span>
+                            <span className="row-item">{task.content}</span>
+                            <span className="row-item">-</span>
+                            <span className="row-item">{task.status}</span>
 
-                        <div
-                            className="row-item flex-item flex-inherit w-105 d-flex justify-content-end align-items-center">
-                            <button type="button" className="btn-star btn-sm btn-edit">
-                                <i className="fas fa-pen"/>
-                            </button>
-                            <button type="button" className="btn-star btn-sm btn-archive" >
-                                <i className="fas fa-folder-plus"/>
-                            </button>
-                            <button
-                                type="button"
-                                className="btn-trash btn-sm btn-del"
-                                onClick={() => {
+                            <div
+                                className="row-item flex-item flex-inherit w-105 d-flex justify-content-end align-items-center">
+                                <button type="button" className="btn-star btn-sm btn-edit">
+                                    <i className="fas fa-pen"/>
+                                </button>
+                                <button type="button" className="btn-star btn-sm btn-archive" onClick={() => {
+                                    archiveTaskHandler(task)
+                                }}>
+                                    <i className="fas fa-folder-plus"/>
+                                </button>
+                                <button type="button" className="btn-trash btn-sm btn-del" onClick={() => {
                                     delTaskHandler(task)
                                 }}>
-                                <i className="fas fa-trash"/>
-                            </button>
+                                    <i className="fas fa-trash"/>
+                                </button>
+                            </div>
+
                         </div>
 
-                    </div>
-
-                ))}
+                    ))}
 
             </div>
 
