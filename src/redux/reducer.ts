@@ -8,6 +8,21 @@ export const reducer = (state = initialState, action: actionType): TaskListProps
                 ...state,
                 tasks: state.tasks.filter(item => item.id !== action.payload.id)
             }
+        case 'ARCHIVE_TASK_ITEM':
+            return {
+                ...state,
+                tasks: state.tasks.map(item => {
+                    if(item.id === action.payload.id){
+                        item.status = (item.status === 'active') ? 'archive' : 'active'
+                    }
+                    return item;
+                })
+            }
+        case 'TOGGLE_TASK_ITEM':
+            return {
+                ...state,
+                showActiveTaskItems: (state.showActiveTaskItems === 'active' ? 'archive' : 'active')
+            }
         default:
             return state;
     }

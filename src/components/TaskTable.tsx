@@ -6,28 +6,7 @@ import {useActions} from "../hooks/useActions";
 export const TaskTable: React.FC = () => {
     const tasks = useTypedSelector(state => state.tasks)
     const showActiveTaskItems = useTypedSelector(state => state.showActiveTaskItems)
-    const {delTaskAction} = useActions()
-
-    const delTaskHandler = (task: TaskInterface) => {
-        //setData({...state, tasks: state.tasks.filter(item => item.id !== task.id)})
-    }
-    const archiveTaskHandler = (task: TaskInterface) => {
-        // setData({
-        //     ...state,
-        //     tasks: state.tasks.map(item => {
-        //         if(item.id === task.id){
-        //             item.status = (item.status === 'active') ? 'archive' : 'active'
-        //         }
-        //         return item;
-        //     })
-        // })
-    }
-    const toggleStatusHandler = () => {
-        // setData({
-        //     ...state,
-        //     showActiveTaskItems: (state.showActiveTaskItems === 'active' ? 'archive' : 'active')
-        // })
-    }
+    const {delTaskAction, archiveTaskAction, toggleStatusAction} = useActions()
 
     return (
 
@@ -41,10 +20,9 @@ export const TaskTable: React.FC = () => {
                 <span className="row-item">Category</span>
                 <span className="row-item">Content</span>
                 <span className="row-item">Dates</span>
-                <span className="row-item">status</span>
 
                 <div className="row-item flex-item flex-inherit w-105 d-flex justify-content-end align-items-center">
-                    <button type="button" className="btn-star btn-sm btn-toggle" onClick={ toggleStatusHandler }><i className="fas fa-folder-plus"/>
+                    <button type="button" className="btn-star btn-sm btn-toggle" onClick={ toggleStatusAction }><i className="fas fa-folder-plus"/>
                     </button>
                     <button type="button" className="btn-trash btn-sm"><i className="fas fa-trash"/></button>
                 </div>
@@ -65,10 +43,9 @@ export const TaskTable: React.FC = () => {
 
                             <span className="row-item heading-column">{task.name}</span>
                             <span className="row-item">{task.created}</span>
-                            <span className="row-item">{task.created}</span>
+                            <span className="row-item">{task.category}</span>
                             <span className="row-item">{task.content}</span>
                             <span className="row-item">-</span>
-                            <span className="row-item">{task.status}</span>
 
                             <div
                                 className="row-item flex-item flex-inherit w-105 d-flex justify-content-end align-items-center">
@@ -76,7 +53,7 @@ export const TaskTable: React.FC = () => {
                                     <i className="fas fa-pen"/>
                                 </button>
                                 <button type="button" className="btn-star btn-sm btn-archive" onClick={() => {
-                                    archiveTaskHandler(task)
+                                    archiveTaskAction(task)
                                 }}>
                                     <i className="fas fa-folder-plus"/>
                                 </button>
