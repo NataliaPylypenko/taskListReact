@@ -1,3 +1,4 @@
+import { TaskListPropsType } from "../types/task";
 
 export const initialState: TaskListPropsType = {
     tasks: [
@@ -61,16 +62,4 @@ export const initialState: TaskListPropsType = {
     showActiveTaskItems: 'active'
 }
 
-export interface TaskInterface {
-    id: string,
-    name: string,
-    created: string,
-    content: string,
-    category: string,
-    status: string
-}
-
-export type TaskListPropsType = {
-    tasks: TaskInterface[],
-    showActiveTaskItems: string
-}
+export const CATEGORIES: string[] = ['Task', 'Random Thought', 'Idea', 'Quote'];

@@ -1,5 +1,6 @@
-import React, {useState} from 'react'
-import {initialState, TaskInterface} from "../redux/store";
+import React, {useState} from 'react';
+import {initialState} from "../redux/store";
+import { TaskInterface} from "../types/task";
 
 export const TaskTable: React.FC = () => {
 
