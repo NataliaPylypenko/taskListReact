@@ -1,9 +1,14 @@
 import React, {useState} from 'react'
 import {initialState} from "../redux/store";
+import { TaskInterface } from '../types/task'
 
 export const TaskTable: React.FC = () => {
 
-    const [state] = useState(initialState);
+    const [state, setData] = useState(initialState);
+
+    const delTaskHandler = (task: TaskInterface) => {
+        setData({...state, tasks: state.tasks.filter(item => item.id !== task.id)})
+    }
 
     return (
 
@@ -50,7 +55,12 @@ export const TaskTable: React.FC = () => {
                             <button type="button" className="btn-star btn-sm btn-archive" >
                                 <i className="fas fa-folder-plus"/>
                             </button>
-                            <button type="button" className="btn-trash btn-sm btn-del">
+                            <button
+                                type="button"
+                                className="btn-trash btn-sm btn-del"
+                                onClick={() => {
+                                    delTaskHandler(task)
+                                }}>
                                 <i className="fas fa-trash"/>
                             </button>
                         </div>
