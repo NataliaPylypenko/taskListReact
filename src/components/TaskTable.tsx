@@ -1,7 +1,7 @@
 import React from 'react';
 import {useTypedSelector} from "../hooks/useTypedSelector";
 import {useActions} from "../hooks/useActions";
-import {getCategoryIcon} from "../helpers/function";
+import {getCategoryIcon, dateParser} from "../helpers/function";
 
 export const TaskTable: React.FC = () => {
     const tasks = useTypedSelector(state => state.tasks)
@@ -45,7 +45,7 @@ export const TaskTable: React.FC = () => {
                             <span className="row-item">{task.created}</span>
                             <span className="row-item">{task.category}</span>
                             <span className="row-item">{task.content}</span>
-                            <span className="row-item">-</span>
+                            <span className="row-item">{dateParser(task.content).join(', ')}</span>
 
                             <div
                                 className="row-item flex-item flex-inherit w-105 d-flex justify-content-end align-items-center">

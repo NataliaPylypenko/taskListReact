@@ -1,4 +1,5 @@
 import {CategoryIconType} from "../types/task";
+import moment from "moment";
 
 const categoryIcon: CategoryIconType[] = [
     {
@@ -36,6 +37,17 @@ export const getCategoryIcon = (category: string): string => {
     const cat: CategoryIconType | undefined = categoryIcon.find(elem => elem.name === category)
     return cat ? cat.icon : ''
 
+}
+
+export const dateParser = (text:string):string[] => {
+    const regexDate = new RegExp('\\d{0,2}\\/\\d{0,2}\\/\\d{4}', 'g');
+    const results: string[] = [];
+
+    Array.from(text.matchAll(regexDate)).map(item => {
+        results.push(moment(item.shift(), 'DD/MM/YYYY').format('DD/MM/YYYY'))
+    })
+
+    return results;
 }
 
 
