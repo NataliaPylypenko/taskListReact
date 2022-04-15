@@ -15,3 +15,10 @@ export const toggleStatusAction = () => {
 export const createTaskItemAction = (payload: TaskInterface) => {
     return { type: "ADD_TASK_ITEM", payload}
 }
+
+export const editTaskItemAction = (payload: TaskInterface) => {
+    return { type: "EDIT_TASK_ITEM", payload}
+}
+export const updateTaskItemAction = (payload: TaskInterface) => {
+    return { type: "UPDATE_TASK_ITEM", payload}
+}

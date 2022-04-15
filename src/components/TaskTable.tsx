@@ -6,7 +6,7 @@ import {getCategoryIcon} from "../helpers/function";
 export const TaskTable: React.FC = () => {
     const tasks = useTypedSelector(state => state.tasks)
     const showActiveTaskItems = useTypedSelector(state => state.showActiveTaskItems)
-    const {delTaskAction, archiveTaskAction, toggleStatusAction} = useActions()
+    const {delTaskAction, archiveTaskAction, toggleStatusAction, editTaskItemAction} = useActions()
 
     return (
 
@@ -49,7 +49,9 @@ export const TaskTable: React.FC = () => {
 
                             <div
                                 className="row-item flex-item flex-inherit w-105 d-flex justify-content-end align-items-center">
-                                <button type="button" className="btn-star btn-sm btn-edit">
+                                <button type="button" className="btn-star btn-sm btn-edit" onClick={() => {
+                                    editTaskItemAction(task)
+                                }}>
                                     <i className="fas fa-pen"/>
                                 </button>
                                 <button type="button" className="btn-star btn-sm btn-archive" onClick={() => {

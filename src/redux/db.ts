@@ -59,7 +59,8 @@ export const initialState: TaskListPropsType = {
             status: "active"
         },
     ],
-    showActiveTaskItems: 'active'
+    showActiveTaskItems: 'active',
+    currentTask: null
 }
 
 export const CATEGORIES: string[] = ['Task', 'Random Thought', 'Idea', 'Quote'];

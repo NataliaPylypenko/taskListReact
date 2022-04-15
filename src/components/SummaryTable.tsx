@@ -17,7 +17,6 @@ export const SummaryTable: React.FC = () => {
       <div className="table-container table-summary">
 
           <div className="table-row heading-row">
-
             <div className="row-item flex-inherit w-45"></div>
             <span className="row-item">Note Category</span>
             <span className="row-item">Active</span>
@@ -41,8 +40,6 @@ export const SummaryTable: React.FC = () => {
                       </div>
                   )
               })}
-
-
           </div>
 
       </div>

@@ -3,6 +3,7 @@ import {Path, useForm, UseFormRegister, SubmitHandler} from "react-hook-form";
 import {useActions} from "../hooks/useActions";
 import moment from "moment";
 import {getRandomId} from "../helpers/function";
+import {useTypedSelector} from "../hooks/useTypedSelector";
 
 export type InputProps = {
     label: Path<IFormValues>;
@@ -11,7 +12,7 @@ export type InputProps = {
 };
 
 export interface IFormValues {
-    id: null | string;
+    id: string;
     name: string;
     content: string;
     category: string;
@@ -22,26 +23,37 @@ export interface IFormValues {
 
 export const TaskForm: React.FC = () => {
 
-    const {createTaskItemAction} = useActions()
+    const {currentTask} = useTypedSelector(state => state)
+    const {createTaskItemAction, updateTaskItemAction} = useActions()
 
-    const {register, handleSubmit, getValues, reset, formState: {errors}} = useForm<IFormValues>();
+    const {register, handleSubmit, setValue, reset, formState: {errors}} = useForm<IFormValues>();
 
     const onSubmit: SubmitHandler<IFormValues> = data => {
-        const a = getValues('category')
-        console.log({data, a})
 
-        createTaskItemAction({
-            ...data,
-            'id': getRandomId(),
-            'created': moment().format('MMMM DD, YYYY'),
-            'status': "active"
-        })
+        if(currentTask?.id){
+            updateTaskItemAction({
+                ...currentTask,
+                ...data
+            })
+        }else {
+            createTaskItemAction({
+                ...data,
+                'id': getRandomId(),
+                'created': moment().format('MMMM DD, YYYY'),
+                'status': "active"
+            })
+        }
         reset()
     };
 
     useEffect(() => {
         reset()
-    }, [reset])
+        if (currentTask?.id) {
+            setValue('name', currentTask.name);
+            setValue('category', currentTask.category);
+            setValue('content', currentTask.content);
+        }
+    }, [reset, currentTask, setValue])
 
     return (
     <form className="form-inline d-flex mb-20 create-form" onSubmit={handleSubmit(onSubmit)}>

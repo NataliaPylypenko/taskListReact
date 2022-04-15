@@ -12,7 +12,7 @@ export const reducer = (state = initialState, action: actionType): TaskListProps
             return {
                 ...state,
                 tasks: state.tasks.map(item => {
-                    if(item.id === action.payload.id){
+                    if (item.id === action.payload.id) {
                         item.status = (item.status === 'active') ? 'archive' : 'active'
                     }
                     return item;
@@ -28,6 +28,13 @@ export const reducer = (state = initialState, action: actionType): TaskListProps
                 ...state,
                 tasks: [...state.tasks, action.payload]
             }
+        case 'EDIT_TASK_ITEM':
+            return {
+                ...state,
+                currentTask: action.payload
+            }
+        case 'UPDATE_TASK_ITEM':
+            return updateTask(state, action.payload)
         default:
             return state;
     }
@@ -36,4 +43,15 @@ export const reducer = (state = initialState, action: actionType): TaskListProps
 export type actionType = {
     type: string,
     payload: TaskInterface
+}
+
+
+const updateTask = (state: TaskListPropsType, payload: TaskInterface): TaskListPropsType => {
+  state.tasks = state.tasks.map(item => {
+        if(item.id === payload.id) {
+            item = payload
+        }
+        return item
+    })
+    return state;
 }

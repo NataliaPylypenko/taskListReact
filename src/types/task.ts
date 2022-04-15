@@ -9,7 +9,8 @@ export interface TaskInterface {
 
 export type TaskListPropsType = {
     tasks: TaskInterface[],
-    showActiveTaskItems: string
+    showActiveTaskItems: string,
+    currentTask: TaskInterface | null
 }
 
 export interface TaskInterfaceSummary {
