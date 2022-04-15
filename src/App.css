@@ -70,11 +70,21 @@
 
 /*FORM*/
 .create-note {
-  margin-top: auto;
+  margin-top: 24px;
 }
 .create-form > div {
   margin-right: 20px;
 }
 .form-group label {
   margin-right: 10px;
+}
+.form-error {
+  color: red;
+  font-size: 14px;
+}
+.form-inline {
+  align-items: flex-start;
+}
+.form-inline .form-group {
+  flex-flow: column wrap!important;
 }

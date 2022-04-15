@@ -23,6 +23,11 @@ export const reducer = (state = initialState, action: actionType): TaskListProps
                 ...state,
                 showActiveTaskItems: (state.showActiveTaskItems === 'active' ? 'archive' : 'active')
             }
+        case 'ADD_TASK_ITEM':
+            return {
+                ...state,
+                tasks: [...state.tasks, action.payload]
+            }
         default:
             return state;
     }

@@ -11,3 +11,7 @@ export const archiveTaskAction = (payload: TaskInterface) => {
 export const toggleStatusAction = () => {
     return { type: "TOGGLE_TASK_ITEM"}
 }
+
+export const createTaskItemAction = (payload: TaskInterface) => {
+    return { type: "ADD_TASK_ITEM", payload}
+}

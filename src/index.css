@@ -17,7 +17,7 @@ textarea,
 select,
 button,
 button:active,
-button:focus { outline: none; border: none; font-size: 100%; margin: 0;}
+button:focus { outline: none; border: none; font-size: 100%;}
 button, input { line-height: normal; }
 
 button {

@@ -1,5 +1,4 @@
 import React from 'react';
-import { TaskInterface} from "../types/task";
 import {useTypedSelector} from "../hooks/useTypedSelector";
 import {useActions} from "../hooks/useActions";
 
