@@ -17,3 +17,8 @@ export interface TaskInterfaceSummary {
     active: number,
     archived: number
 }
+
+export type CategoryIconType = {
+    name: string,
+    icon: string
+}

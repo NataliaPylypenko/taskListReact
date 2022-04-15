@@ -1,8 +1,8 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {Path, useForm, UseFormRegister, SubmitHandler} from "react-hook-form";
 import {useActions} from "../hooks/useActions";
 import moment from "moment";
-import { ucFirst, getRandomId} from "../helpers/function";
+import {getRandomId} from "../helpers/function";
 
 export type InputProps = {
     label: Path<IFormValues>;
@@ -24,9 +24,11 @@ export const TaskForm: React.FC = () => {
 
     const {createTaskItemAction} = useActions()
 
-    const {register, handleSubmit, formState: {errors}} = useForm<IFormValues>();
+    const {register, handleSubmit, getValues, reset, formState: {errors}} = useForm<IFormValues>();
 
     const onSubmit: SubmitHandler<IFormValues> = data => {
+        const a = getValues('category')
+        console.log({data, a})
 
         createTaskItemAction({
             ...data,
@@ -34,43 +36,51 @@ export const TaskForm: React.FC = () => {
             'created': moment().format('MMMM DD, YYYY'),
             'status': "active"
         })
+        reset()
     };
 
-    const Input = ({label, register, required}: InputProps) => (
-        <div className="form-group">
-            <label>{ucFirst(label)}</label>
-            <input className="form-control" {...register(label, {required: true})} />
-            <div className="form-error">
-                {errors[label] && label + " is required"}
-            </div>
-
-        </div>
-    );
-
-    const Select = React.forwardRef<HTMLSelectElement,
-        { label: string } & ReturnType<UseFormRegister<IFormValues>>>(({onChange, onBlur, name, label}, ref) => (
-        <div className="form-group">
-            <label>{ucFirst(label)}</label>
-            <select className="form-control" name={name} ref={ref}>
-                <option value="Task">Task</option>
-                <option value="Random Thought">Random Thought</option>
-                <option value="Idea">Idea</option>
-                <option value="Quote">Quote</option>
-            </select>
-        </div>
-    ));
+    useEffect(() => {
+        reset()
+    }, [reset])
 
     return (
+    <form className="form-inline d-flex mb-20 create-form" onSubmit={handleSubmit(onSubmit)}>
+            <div className="form-group">
+                <label htmlFor="name">Name</label>
+                <input type="text"
+                       className="form-control"
+                       placeholder="Enter name"
+                       {...register("name" ,{required: true})} />
+                <div className="form-error">
+                    {errors['name'] && 'name is required'}
+                </div>
+            </div>
 
-        <form className="form-inline d-flex mb-20 create-form" onSubmit={handleSubmit(onSubmit)}>
+            <div className="form-group">
+                <label htmlFor="category">Category list:</label>
+                <select className="form-control" {...register("category" ,{required: true})}>
+                    <option value="Task">Task</option>
+                    <option value="Random Thought">Random Thought</option>
+                    <option value="Idea">Idea</option>
+                    <option value="Quote">Quote</option>
+                </select>
+                <div className="form-error">
+                    {errors['category'] && 'category is required'}
+                </div>
+            </div>
 
-            <Input label="name" register={register} required/>
-            <Select label="category" {...register("category")} />
-            <Input label="content" register={register} required/>
+            <div className="form-group">
+                <label htmlFor="content">Content</label>
+                <input type="text"
+                       className="form-control"
+                       placeholder="Enter content"
+                       {...register("content" ,{required: true})} />
+                <div className="form-error">
+                    {errors['content'] && 'content is required'}
+                </div>
+            </div>
 
-            <button type="submit" id="createNote" className="btn btn-secondary create-note">
-                Create Note
-            </button>
-        </form>
+            <button type="submit" id="createNote" className="btn btn-secondary create-note">Create Note</button>
+    </form>
     )
 }

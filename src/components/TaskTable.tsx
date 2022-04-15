@@ -1,6 +1,7 @@
 import React from 'react';
 import {useTypedSelector} from "../hooks/useTypedSelector";
 import {useActions} from "../hooks/useActions";
+import {getCategoryIcon} from "../helpers/function";
 
 export const TaskTable: React.FC = () => {
     const tasks = useTypedSelector(state => state.tasks)
@@ -36,7 +37,7 @@ export const TaskTable: React.FC = () => {
 
                             <div className="row-item flex-inherit w-45">
                                 <div className="logo d-flex justify-content-center align-items-center">
-                                    <i className="fas fa-tasks"/>
+                                    <i className={"fas fa-" + getCategoryIcon(task.category)}/>
                                 </div>
                             </div>
 

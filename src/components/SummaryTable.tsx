@@ -2,6 +2,7 @@ import React from 'react';
 import {CATEGORIES} from "../redux/db";
 import { TaskInterfaceSummary } from "../types/task";
 import {useTypedSelector} from "../hooks/useTypedSelector";
+import {getCategoryIcon} from "../helpers/function";
 
 export const SummaryTable: React.FC = () => {
     const tasks = useTypedSelector(state => state.tasks)
@@ -30,7 +31,7 @@ export const SummaryTable: React.FC = () => {
 
                           <div className="row-item flex-inherit w-45">
                               <div className="logo d-flex justify-content-center align-items-center">
-                                  <i className="fas fa-tasks"></i>
+                                  <i className={"fas fa-" + getCategoryIcon(item.category)}></i>
                               </div>
                           </div>
                           <span className="row-item heading-column">{item.category}</span>
