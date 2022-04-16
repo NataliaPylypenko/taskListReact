@@ -65,15 +65,11 @@ export const TaskTable: React.FC = () => {
                                     <i className="fas fa-trash"/>
                                 </button>
                             </div>
-
                         </div>
-
                     ))}
 
             </div>
-
         </div>
-
     )
 }
 

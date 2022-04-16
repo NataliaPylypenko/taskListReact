@@ -1,28 +1,8 @@
 import {CategoryIconType} from "../types/task";
 import moment from "moment";
+import {categoryIcon} from "../redux/db";
 
-const categoryIcon: CategoryIconType[] = [
-    {
-        name: 'Task',
-        icon: 'tasks'
-    },
-    {
-        name: 'Random Thought',
-        icon: 'random'
-    },
-    {
-        name: 'Idea',
-        icon: 'lightbulb'
-    },
-    {
-        name: 'Quote',
-        icon: 'quote-right'
-    }
-];
 
-export const ucFirst = (str: string) => {
-    return str[0].toUpperCase() + str.slice(1);
-}
 export const getRandomId = () => {
     let result = '';
     const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';

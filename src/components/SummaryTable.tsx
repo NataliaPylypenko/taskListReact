@@ -1,5 +1,5 @@
 import React from 'react';
-import {CATEGORIES} from "../redux/db";
+import {CATEGORIES, STATUS} from "../redux/db";
 import { TaskInterfaceSummary } from "../types/task";
 import {useTypedSelector} from "../hooks/useTypedSelector";
 import {getCategoryIcon} from "../helpers/function";
@@ -9,8 +9,8 @@ export const SummaryTable: React.FC = () => {
 
     const summary: TaskInterfaceSummary[] = CATEGORIES.map(category => ({
         category,
-        active: tasks.filter(task => task.category === category && task.status === 'active').length,
-        archived: tasks.filter(task => task.category === category && task.status === 'archive').length,
+        active: tasks.filter(task => task.category === category && task.status === STATUS.ACTIVE).length,
+        archived: tasks.filter(task => task.category === category && task.status === STATUS.ARCHIVE).length,
     }))
 
   return (

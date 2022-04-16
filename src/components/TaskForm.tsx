@@ -1,48 +1,31 @@
 import React, {useEffect} from 'react'
-import {Path, useForm, UseFormRegister, SubmitHandler} from "react-hook-form";
+import {useForm, SubmitHandler} from "react-hook-form";
 import {useActions} from "../hooks/useActions";
 import moment from "moment";
 import {getRandomId} from "../helpers/function";
 import {useTypedSelector} from "../hooks/useTypedSelector";
+import {IFormValues} from "../types/task";
+import {STATUS} from "../redux/db";
 
-export type InputProps = {
-    label: Path<IFormValues>;
-    register: UseFormRegister<IFormValues>;
-    required: boolean;
-};
-
-export interface IFormValues {
-    id: string;
-    name: string;
-    content: string;
-    category: string;
-    created: string;
-    dates: string;
-    status: string;
-}
 
 export const TaskForm: React.FC = () => {
 
     const {currentTask} = useTypedSelector(state => state)
     const {createTaskItemAction, updateTaskItemAction} = useActions()
-
     const {register, handleSubmit, setValue, reset, formState: {errors}} = useForm<IFormValues>();
-
     const onSubmit: SubmitHandler<IFormValues> = data => {
 
         if(currentTask?.id){
-            updateTaskItemAction({
-                ...currentTask,
-                ...data
-            })
+            updateTaskItemAction({...currentTask, ...data})
         }else {
             createTaskItemAction({
                 ...data,
                 'id': getRandomId(),
                 'created': moment().format('MMMM DD, YYYY'),
-                'status': "active"
+                'status': STATUS.ACTIVE
             })
         }
+
         reset()
     };
 

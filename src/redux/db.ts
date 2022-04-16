@@ -1,4 +1,4 @@
-import { TaskListPropsType } from "../types/task";
+import {CategoryIconType, statusType, TaskListPropsType} from "../types/task";
 
 export const initialState: TaskListPropsType = {
     tasks: [
@@ -64,3 +64,27 @@ export const initialState: TaskListPropsType = {
 }
 
 export const CATEGORIES: string[] = ['Task', 'Random Thought', 'Idea', 'Quote'];
+
+export const STATUS: statusType = {
+    ACTIVE: 'active',
+    ARCHIVE: 'archive'
+}
+
+export const categoryIcon: CategoryIconType[] = [
+    {
+        name: 'Task',
+        icon: 'tasks'
+    },
+    {
+        name: 'Random Thought',
+        icon: 'random'
+    },
+    {
+        name: 'Idea',
+        icon: 'lightbulb'
+    },
+    {
+        name: 'Quote',
+        icon: 'quote-right'
+    }
+];
