@@ -13,8 +13,8 @@ export const TaskForm: React.FC = () => {
     const {currentTask} = useTypedSelector(state => state)
     const {createTaskItemAction, updateTaskItemAction} = useActions()
     const {register, handleSubmit, setValue, reset, formState: {errors}} = useForm<IFormValues>();
-    const onSubmit: SubmitHandler<IFormValues> = data => {
 
+    const onSubmit: SubmitHandler<IFormValues> = data => {
         if(currentTask?.id){
             updateTaskItemAction({...currentTask, ...data})
         }else {
@@ -28,7 +28,6 @@ export const TaskForm: React.FC = () => {
 
         reset()
     };
-
     useEffect(() => {
         reset()
         if (currentTask?.id) {
@@ -37,6 +36,7 @@ export const TaskForm: React.FC = () => {
             setValue('content', currentTask.content);
         }
     }, [reset, currentTask, setValue])
+
 
     return (
     <form className="form-inline d-flex mb-20 create-form" onSubmit={handleSubmit(onSubmit)}>
@@ -75,7 +75,7 @@ export const TaskForm: React.FC = () => {
                 </div>
             </div>
 
-            <button type="submit" id="createNote" className="btn btn-secondary create-note">Create Note</button>
+            <button type="submit" id="createNote" className="btn btn-secondary create-note">{currentTask?.id ? 'Edit' : 'Create'} Note</button>
     </form>
     )
 }

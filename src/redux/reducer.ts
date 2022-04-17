@@ -34,7 +34,10 @@ export const reducer = (state = initialState, action: actionType): TaskListProps
                 currentTask: action.payload
             }
         case TaskActionTypes.UPDATE_TASK_ITEM:
-            return updateTask(state, action.payload)
+            return {
+                ...updateTask(state, action.payload),
+                currentTask: null
+            }
         default:
             return state;
     }
